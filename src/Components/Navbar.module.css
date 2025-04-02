@@ -1,0 +1,252 @@
+.navBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between; /* Asegura que el logo, botones y perfil se distribuyan correctamente */
+    align-items: center;
+    z-index: 1000;
+}
+
+
+/* Estilo del logo, lo mantendremos a la izquierda */
+
+
+/* Menú centrado con botones y la lupa */
+.navContent {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 2; /* Hace que el contenedor ocupe más espacio y se centre */
+    justify-content: center; /* Centra los botones y la lupa */
+}
+
+/* Lista de navegación */
+ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    cursor: pointer;
+}
+
+ul li a {
+    color: #f1f1f1; /* Cambia el color del texto */
+    text-decoration: none; /* Elimina el subrayado */
+    font-weight: bold; /* Opcional: hace que el texto sea más grueso */
+    transition: color 0.3s ease-in-out; /* Efecto suave al cambiar de color */
+}
+
+/* Cuando pasas el cursor sobre un enlace */
+ul li a:hover {
+    color: #ffcc00; /* Cambia a un color amarillo al pasar el mouse */
+}
+
+/* Estilos de la barra de búsqueda */
+.searchContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.searchIcon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.searchBar {
+    position: absolute;
+    left: 30px; /* Mueve la barra un poco a la derecha, justo después de la lupa */
+    width: 0; /* Oculta la barra inicialmente */
+    height: 0;
+    max-width: 350px; /* Tamaño máximo al expandirse */
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: white;
+    color: black;
+    transition: width 0.3s ease-in-out;
+    opacity: 0;
+}
+
+/* Cuando la barra está visible */
+.searchContainer.active .searchBar {
+    width: 350px; /* Expande la barra */
+    opacity: 1;
+}
+
+/* Icono de perfil alineado a la derecha */
+.profileIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 70px; /* Asegura que no se pierda en el borde */
+}
+
+.userIcon {
+    font-size: 28px; /* Tamaño más grande */
+    cursor: pointer;
+    color: white;
+}
+
+.menuButton {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.sideMenu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    padding: 20px;
+    transition: left 0.3s ease-in-out;
+    z-index: 2000; /* Se asegura de que la barra lateral esté por encima de otros elementos */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sideMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Acomoda los elementos en una columna */
+    gap: 15px; /* Espaciado entre los elementos */
+}
+
+.sideMenu ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+.sideMenu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.sideMenu ul li a:hover {
+    color: #ffcc00; /* Cambia de color al pasar el mouse */
+}
+
+.sideMenu.open {
+    left: 0;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media (max-width: 650px) {
+    .menuButton {
+        display: block;
+    }
+    
+    .navLinks {
+        display: none;
+    }
+}
+
+@media (min-width: 650px) {
+    .sideMenu {
+        display: none;
+    }
+
+    
+}
+
+@media (min-width: 650px) {
+    .logo {
+        font-size: 18px; /* Reduce el tamaño del logo */
+        margin-left: 5px; /* Reduce el margen izquierdo */
+    }
+}
+
+@media (max-width: 650px) {
+
+
+    .navBar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        flex: 1; /* Permite que el logo ocupe su espacio sin empujar los íconos */
+        font-size: 18px;
+        justify-content: flex-start;
+        
+    }
+
+
+    .menuButton {
+        font-size: 24px;
+        flex: 1;
+        text-align: center; /* Centra el ícono de menú */
+        margin-left: 100px;
+    }
+
+
+    .searchContainer {
+        flex: 1; 
+        display: flex;
+        justify-content: center;
+        position: relative; /* Mantiene la barra alineada */
+    }
+
+    .searchContainer.active {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%); /* Mantiene la alineación vertical */
+        width: 100%;
+        justify-content: center;
+    }
+
+    .searchContainer.active .searchBar {
+        width: calc(100% - 40px); /* Expande casi toda la pantalla */
+        max-width: 90%;
+        height: 35px;
+        opacity: 1;
+        transition: width 0.3s ease-in-out;
+    }
+
+    .searchBar {
+        width: 0;
+        opacity: 0;
+        transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .profileIcon {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end; /* Alinea el icono de usuario a la derecha */
+    }
+
+
+
+}
+
+.logoImg {
+    height: 100px;  /* Ajusta según el tamaño de tu logo */
+    width: auto;
+}
+

@@ -1,0 +1,62 @@
+[
+    {
+      "id": 1,
+      "name": "The Witcher 3: Wild Hunt",
+      "price": 19990,
+      "image": "/images/witcher3.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Red Dead Redemption 2",
+      "price": 29990,
+      "image": "/images/rdr2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Cyberpunk 2077",
+      "price": 34990,
+      "image": "/images/cyberpunk2077.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Elden Ring",
+      "price": 39990,
+      "image": "/images/eldenring.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Grand Theft Auto V",
+      "price": 14990,
+      "image": "/images/gta5.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Minecraft",
+      "price": 12990,
+      "image": "/images/minecraft.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Call of Duty: Modern Warfare III",
+      "price": 49990,
+      "image": "/images/codmw3.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Hogwarts Legacy",
+      "price": 39990,
+      "image": "/images/hogwartslegacy.jpg"
+    },
+    {
+      "id": 9,
+      "name": "FIFA 24",
+      "price": 34990,
+      "image": "/images/fifa24.jpg"
+    },
+    {
+      "id": 10,
+      "name": "Dark Souls III",
+      "price": 19990,
+      "image": "/images/darksouls3.jpg"
+    }
+  ]
