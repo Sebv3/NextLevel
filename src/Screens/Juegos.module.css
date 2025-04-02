@@ -1,0 +1,103 @@
+.container {
+    text-align: center;
+    padding: 20px;
+    padding-top: 200px;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    margin-top: 60px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Esto hará que haya 3 columnas */
+    gap: 30px;
+    justify-content: center;
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 50px;
+  }
+  
+  @media (max-width: 1200px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr); /* En pantallas más pequeñas, 2 columnas */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr; /* En pantallas aún más pequeñas, 1 columna */
+    }
+  }
+  
+  
+  .card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Efecto al pasar el mouse */
+  }
+  
+  .image {
+    width: 300px; /* Asegura que la imagen ocupe todo el ancho disponible */
+    height: 400px; /* Ajusta la altura para que todas tengan el mismo tamaño */
+    object-fit: cover; /* Hace que la imagen cubra todo el espacio sin distorsionar */
+    border-radius: 8px; /* Para bordes redondeados */
+  }
+  
+  .name {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .price {
+    font-size: 1.1rem;
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .button {
+    background: #220c9b;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .button:hover {
+    background: #0056b3;
+  }
+  
+  .categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .categoryButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 30px;
+    font-size: 60px; /* Tamaño del icono */
+    transition: transform 0.3s ease, color 0.3s ease;
+    color: #000000; /* Color inicial de los iconos */
+  }
+  
+  .categoryButton:hover {
+    transform: scale(1.2);
+    color: #007bff; /* Color cuando pasas el mouse */
+  }
+  

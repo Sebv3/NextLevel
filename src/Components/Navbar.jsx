@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';  // Importamos Link de react-router-dom
 import { FiSearch, FiUser } from 'react-icons/fi';
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import styles from './Navbar.module.css';
@@ -11,10 +11,10 @@ const Navbar = () => {
     const searchRef = useRef(null);
 
     const links = [
-        { id: 1, link: "Juegos" },
-        { id: 2, link: "Categorias" },
-        { id: 3, link: "Ofertas" },
-        { id: 4, link: "Nuevos" }
+        { id: 1, link: "Juegos", path: "/juegos" },
+        { id: 2, link: "Categorias", path: "/categorias" },
+        { id: 3, link: "Ofertas", path: "/ofertas" },
+        { id: 4, link: "Nuevos", path: "/nuevos" }
     ];
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const Navbar = () => {
                 <ul>
                     {links.map((x) => (
                         <li key={x.id}>
-                            <Link onClick={() => setNavBarOpen(false)}>{x.link}</Link>
+                            <Link to={x.path} onClick={() => setNavBarOpen(false)}>{x.link}</Link>
                         </li>
                     ))}
                 </ul>
@@ -58,7 +58,7 @@ const Navbar = () => {
                 <ul className={styles.navLinks}>
                     {links.map((x) => (
                         <li key={x.id}>
-                            <Link>{x.link}</Link>
+                            <Link to={x.path}>{x.link}</Link>
                         </li>
                     ))}
                 </ul>
