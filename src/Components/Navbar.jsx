@@ -7,6 +7,7 @@ import logo from "/src/assets/logo.png";
 import { CartContext } from '../context/CartContext';
 
 
+
 const Navbar = () => {
     const { cart } = useContext(CartContext);
     const totalItems = cart.reduce((total, item) => total + item.cantidad, 0);
@@ -18,10 +19,11 @@ const Navbar = () => {
     const searchRef = useRef(null);
 
     const links = [
-        { id: 1, link: "Juegos", path: "/juegos" },
-        { id: 2, link: "Categorias", path: "/categorias" },
-        { id: 3, link: "Ofertas", path: "/ofertas" },
-        { id: 4, link: "Nuevos", path: "/nuevos" }
+        { id: 1, link: "Inicio", path: "/Home" },
+        { id: 2, link: "Juegos", path: "/juegos" },
+        { id: 3, link: "Categorias", path: "/categorias" },
+        { id: 4, link: "Ofertas", path: "/ofertas" },
+        { id: 5, link: "Nuevos", path: "/nuevos" }
     ];
 
     useEffect(() => {
@@ -85,7 +87,13 @@ const Navbar = () => {
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <button className={styles.closeModal} onClick={() => setIsLoginOpen(false)}>&times;</button>
-                        <h2>Iniciar Sesión</h2>
+
+                        {/* Logo en el modal */}
+                        <div className={styles.modalLogo}>
+                            <img src={logo} alt="Logo" className={styles.logoImg} />
+                        </div>
+
+                        <h2 className={styles.modalTitle}>Iniciar Sesión</h2> {/* Título del modal */}
                         <input type="email" placeholder="Correo electrónico" />
                         <input type="password" placeholder="Contraseña" />
                         <button className={styles.btn}>Ingresar</button>
@@ -104,7 +112,13 @@ const Navbar = () => {
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <button className={styles.closeModal} onClick={() => setIsRegisterOpen(false)}>&times;</button>
-                        <h2>Registrarse</h2>
+
+                        {/* Logo en el modal */}
+                        <div className={styles.modalLogo}>
+                            <img src={logo} alt="Logo" className={styles.logoImg} />
+                        </div>
+
+                        <h2 className={styles.modalTitle}>Registrarse</h2> {/* Título del modal */}
                         <input type="text" placeholder="Nombre de usuario" />
                         <input type="email" placeholder="Correo electrónico" />
                         <input type="tel" placeholder="Teléfono" />
@@ -118,11 +132,18 @@ const Navbar = () => {
                 </div>
             )}
 
+
             {/* Modal de "Olvidaste tu contraseña" */}
             {isForgotPasswordOpen && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <button className={styles.closeModal} onClick={() => setIsForgotPasswordOpen(false)}>&times;</button>
+
+                        {/* Logo en el modal */}
+                        <div className={styles.modalLogo}>
+                            <img src={logo} alt="Logo" className={styles.logoImg} />
+                        </div>
+
                         <h2 className={styles.recuperarletras}>Recuperar contraseña</h2>
                         <p className={styles.recuperarletras}>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
                         <input type="email" placeholder="Correo electrónico" />
@@ -133,6 +154,7 @@ const Navbar = () => {
                     </div>
                 </div>
             )}
+
         </div>
     );
 };
