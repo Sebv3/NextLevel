@@ -1,11 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FiSearch, FiUser } from 'react-icons/fi';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart } from "react-icons/ai";
 import styles from './Navbar.module.css';
 import logo from "/src/assets/logo.png";
+import { CartContext } from '../context/CartContext';
+
 
 const Navbar = () => {
+    const { cart } = useContext(CartContext);
+    const totalItems = cart.reduce((total, item) => total + item.cantidad, 0);
     const [searchVisible, setSearchVisible] = useState(false);
     const [navBarOpen, setNavBarOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -70,6 +74,7 @@ const Navbar = () => {
             <div className={styles.profileContainer}>
                 <Link to="/carrito" className={styles.cartIcon}>
                     <AiOutlineShoppingCart />
+                    {totalItems > 0 && <span className={styles.cartBadge}>{totalItems}</span>}
                 </Link>
                 <div className={styles.divider}></div>
                 <FiUser className={styles.userIcon} onClick={() => setIsLoginOpen(true)} />

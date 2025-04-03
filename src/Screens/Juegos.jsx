@@ -1,23 +1,22 @@
-import React from 'react';
-import styles from './Juegos.module.css'; 
-import juegosData from '../data/juegosData'; // Datos de juego
-
-// Importamos los iconos de cada plataforma
-import { FaPlaystation, FaXbox, FaWindows } from "react-icons/fa"; 
-import { BsNintendoSwitch } from "react-icons/bs"; 
+import React, { useContext } from "react";
+import styles from "./Juegos.module.css";
+import juegosData from "../data/juegosData";
+import { FaPlaystation, FaXbox, FaWindows } from "react-icons/fa";
+import { BsNintendoSwitch } from "react-icons/bs";
+import { CartContext } from "../context/CartContext"; // Importamos el contexto
 
 const categorias = [
   { id: 1, nombre: "PlayStation", icono: <FaPlaystation /> },
   { id: 2, nombre: "Xbox", icono: <FaXbox /> },
-  { id: 3, nombre: "PC", icono: <FaWindows /> }, 
-  { id: 4, nombre: "Nintendo", icono: <BsNintendoSwitch /> }
+  { id: 3, nombre: "PC", icono: <FaWindows /> },
+  { id: 4, nombre: "Nintendo", icono: <BsNintendoSwitch /> },
 ];
 
 const Juegos = () => {
+  const { addToCart } = useContext(CartContext); // Usamos el contexto
+
   return (
     <div className={styles.container}>
-      
-      {/* Botones de categorías con iconos */}
       <div className={styles.categories}>
         {categorias.map((categoria) => (
           <button key={categoria.id} className={styles.categoryButton}>
@@ -33,8 +32,10 @@ const Juegos = () => {
           <div key={juego.id} className={styles.card}>
             <img src={juego.imagen} alt={juego.nombre} className={styles.image} />
             <h2 className={styles.name}>{juego.nombre}</h2>
-            <p className={styles.price}>${juego.precio}</p>
-            <button className={styles.button}>Comprar</button>
+            <p className={styles.price}>${juego.precio.toLocaleString("es-CL")}</p>
+            <button className={styles.button} onClick={() => addToCart(juego)}>
+              Comprar
+            </button>
           </div>
         ))}
       </div>
