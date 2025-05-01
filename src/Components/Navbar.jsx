@@ -19,7 +19,7 @@ const Navbar = () => {
     const searchRef = useRef(null);
 
     const links = [
-        { id: 1, link: "Inicio", path: "/Home" },
+        { id: 1, link: "Inicio", path: "/" },
         { id: 2, link: "Juegos", path: "/juegos" },
         { id: 3, link: "Categorias", path: "/categorias" },
         { id: 4, link: "Ofertas", path: "/ofertas" },

@@ -16,13 +16,13 @@ function App() {
     <CartProvider>
       <Navbar />
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/" element={<Home />} /> 
+          <Route path="/contacto" element={<Contacto />} />
         <Route path="/juegos" element={<Juegos />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/carrito" element={<Carrito />} />
-        <Route path="/pago" element={<Pago />} /> {/* ✅ RUTA CORRECTA */}
+        <Route path="/pago" element={<Pago />} />
       </Routes>
     </CartProvider>
   );

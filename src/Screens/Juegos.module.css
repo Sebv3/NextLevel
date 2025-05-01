@@ -1,6 +1,7 @@
-.container {
-  text-align: center;
-  padding-top: 100px;
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .title {
@@ -9,43 +10,59 @@
   margin-top: 60px;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columnas */
   gap: 30px;
-  justify-content: center;
-  padding: 10px;
-  max-width: 1200px;
-  margin: 0 auto;
   padding-top: 50px;
+  
+  margin-bottom: 80px;
 }
 
 
 
 .card {
+  
   background: #fff;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 320px;
+  width: 100%;
+  max-width: 350px;
   transition: transform 0.3s ease;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card:hover {
-  transform: scale(1.05); /* Efecto al pasar el mouse */
+  transform: scale(1.02); /* Efecto al pasar el mouse */
 }
 
 .image {
-  width: 300px; /* Asegura que la imagen ocupe todo el ancho disponible */
-  height: 400px; /* Ajusta la altura para que todas tengan el mismo tamaño */
-  object-fit: cover; /* Hace que la imagen cubra todo el espacio sin distorsionar */
-  border-radius: 8px; /* Para bordes redondeados */
+  width: 100%;
+  max-width: 300px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;       /* Necesario para que el margin auto funcione bien */
+  margin: 0 auto;       /* ✅ Centra la imagen horizontalmente */
 }
 
 .name {
   font-size: 1.2rem;
-  margin: 10px 0;
+  height: 4rem; /* Fuerza a que el título ocupe dos líneas como máximo */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .price {
@@ -71,8 +88,9 @@
 .categories {
   display: flex;
   justify-content: center;
+  margin-top: 40px;
   margin-bottom: 20px;
-  gap: 30px; /* Espacio entre los botones en pantallas grandes */
+  gap: 30px;
 }
 
 .categoryButton {
@@ -87,7 +105,7 @@
 }
 
 .categoryButton:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   color: #007bff; /* Color cuando pasas el mouse */
 }
 
@@ -112,4 +130,11 @@
   .categories {
     gap: 15px; /* Reducir espacio entre los botones en pantallas pequeñas */
   }
+}
+
+
+.footerWrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }

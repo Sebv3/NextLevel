@@ -1,9 +1,7 @@
-body {
-    zoom: 100%; /* Asegura que no hay zoom aplicado */
-    overflow-x: hidden; /* Evita que haya desbordamiento en la página */
-}
+
 
 .navBar {
+    font-size: 16px;
     position: fixed;
     top: 0;
     left: 0;
@@ -185,7 +183,7 @@ ul li a:hover {
 }
 
 .userIcon {
-    font-size: 28px; /* Tamaño más grande */
+    font-size: 28px !important;
     cursor: pointer;
     color: white;
 }
@@ -265,18 +263,9 @@ ul li a:hover {
     
 }
 
-@media (min-width: 713px) {
-    .logo {
-        font-size: 18px; /* Reduce el tamaño del logo */
-        margin-left: 5px; /* Reduce el margen izquierdo */
-    }
-}
+
 
 @media (max-width: 713px) {
-
-    .navContent {
-        margin-right: 20px;
-    }
 
 
     .navBar {
@@ -285,25 +274,18 @@ ul li a:hover {
         align-items: center;
     }
 
-    .logo {
-        flex: 1; /* Permite que el logo ocupe su espacio sin empujar los íconos */
-        font-size: 18px;
-        justify-content: flex-start;
-        
-    }
 
 
     .menuButton {
         font-size: 30px;
         flex: 1;
-        text-align: center; /* Centra el ícono de menú */
-        margin-left: 1px;
-        
+        margin-right: 10px;
+        margin-top: 5px;
     }
     
     .searchIcon {
+        margin-right: 20px;
         font-size: 30px;
-        margin-left: 10px;
         text-align: center;
         align-items: center;
     }
@@ -321,7 +303,7 @@ ul li a:hover {
         left: 0;
         top: 50%;
         transform: translateY(-50%); /* Mantiene la alineación vertical */
-        width: 100%;
+        width: 82%;
         justify-content: center;
     }
 
@@ -378,7 +360,7 @@ ul li a:hover {
 
 .cartIcon {
     position: relative;
-    font-size: 29px;
+    font-size: 29px !important;
     color: white;
     cursor: pointer;
     text-decoration: none;

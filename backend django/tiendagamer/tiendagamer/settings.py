@@ -127,9 +127,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5174",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 TRANSBANK_RETURN_URL = "http://127.0.0.1:5173/pago/"
 TRANSBANK_COMMERCE_CODE = "597055555532"  # Obténlo desde tu cuenta de Transbank
