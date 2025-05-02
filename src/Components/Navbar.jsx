@@ -26,6 +26,15 @@ const Navbar = () => {
         { id: 5, link: "Nuevos", path: "/nuevos" }
     ];
 
+    const [registroData, setRegistroData] = useState({
+        username: '',
+        email: '',
+        telefono: '',
+        password: '',
+        confirmPassword: '',
+    });
+    
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -119,12 +128,72 @@ const Navbar = () => {
                         </div>
 
                         <h2 className={styles.modalTitle}>Registrarse</h2> {/* Título del modal */}
-                        <input type="text" placeholder="Nombre de usuario" />
-                        <input type="email" placeholder="Correo electrónico" />
-                        <input type="tel" placeholder="Teléfono" />
-                        <input type="password" placeholder="Contraseña" />
-                        <input type="password" placeholder="Confirmar contraseña" />
-                        <button className={styles.btn}>Registrarse</button>
+                        <input
+                            type="text"
+                            placeholder="Nombre de usuario"
+                            value={registroData.username}
+                            onChange={(e) => setRegistroData({ ...registroData, username: e.target.value })}
+                        />
+                        <input
+                            type="email"
+                            placeholder="Correo electrónico"
+                            value={registroData.email}
+                            onChange={(e) => setRegistroData({ ...registroData, email: e.target.value })}
+                        />
+                        <input
+                            type="tel"
+                            placeholder="Teléfono"
+                            value={registroData.telefono}
+                            onChange={(e) => setRegistroData({ ...registroData, telefono: e.target.value })}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Contraseña"
+                            value={registroData.password}
+                            onChange={(e) => setRegistroData({ ...registroData, password: e.target.value })}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Confirmar contraseña"
+                            value={registroData.confirmPassword}
+                            onChange={(e) => setRegistroData({ ...registroData, confirmPassword: e.target.value })}
+                        />
+                        <button
+                            className={styles.btn}
+                            onClick={async () => {
+                                if (registroData.password !== registroData.confirmPassword) {
+                                    alert('Las contraseñas no coinciden');
+                                    return;
+                                }
+
+                                try {
+                                    const response = await fetch('http://localhost:8000/api/register/', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            username: registroData.username,
+                                            email: registroData.email,
+                                            password: registroData.password,
+                                        }),
+                                    });
+
+                                    if (response.ok) {
+                                        alert('Registro exitoso');
+                                        setIsRegisterOpen(false);
+                                        setIsLoginOpen(true); // abre login
+                                    } else {
+                                        const errorData = await response.json();
+                                        alert('Error en el registro: ' + JSON.stringify(errorData));
+                                    }
+                                } catch (error) {
+                                    alert('Error de red: ' + error.message);
+                                }
+                            }}
+                        >
+                            Registrarse
+                        </button>
                         <p className={styles.linkText} onClick={() => { setIsRegisterOpen(false); setIsLoginOpen(true); }}>
                             ¿Ya tienes cuenta? <span>Iniciar sesión</span>
                         </p>

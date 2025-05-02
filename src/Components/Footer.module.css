@@ -1,17 +1,21 @@
 .footer {
-    background-color: #111;
-    color: #ccc;
-    padding: 40px 20px;
-    font-size: 0.9rem;
-    margin-top: 40px;
-    width: 100vw;
-  }
+  background-color: #111;
+  color: #ccc;
+  padding: 40px 20px;
+  font-size: 0.9rem;
+  margin-top: 40px;
+  width: 100vw; /* importante para que ocupe toda la pantalla */
+  box-sizing: border-box;
+}
   
-  .footerContent {
-    display: flex;
-    justify-content: space-between;
-    gap: 100px;
-  }
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;      /* Centra el contenido */
+  padding: 0 20px;     /* Respeta el padding lateral como el resto del sitio */
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+}
   
   .logoSection {
     min-width: 200px;

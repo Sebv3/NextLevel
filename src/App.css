@@ -3,11 +3,11 @@
   text-align: center;
 }
 
-html, body {
-  width: 100%;
+body, html {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  width: 100%;
+  overflow-x: hidden; 
 }
 
 .logo {

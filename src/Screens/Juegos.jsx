@@ -25,6 +25,7 @@ const Juegos = () => {
 
   return (
     <>
+      {/* Contenido principal con container */}
       <div className={styles.container}>
         <div className={styles.categories}>
           {categorias.map((categoria) => (
@@ -33,9 +34,9 @@ const Juegos = () => {
             </button>
           ))}
         </div>
-  
+
         <h1 className={styles.title}>Juegos Disponibles</h1>
-  
+
         <div className={styles.grid}>
           {juegos.map((juego) => (
             <div key={juego.id} className={styles.card}>
@@ -61,12 +62,11 @@ const Juegos = () => {
           ))}
         </div>
       </div>
-  
-      {/* Footer fuera del contenedor */}
+
+      {/* Footer FUERA del container */}
       <Footer />
     </>
   );
-  
 };
 
 export default Juegos;
