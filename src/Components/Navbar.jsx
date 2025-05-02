@@ -33,7 +33,12 @@ const Navbar = () => {
         password: '',
         confirmPassword: '',
     });
-    
+
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: ''
+    });
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -103,9 +108,55 @@ const Navbar = () => {
                         </div>
 
                         <h2 className={styles.modalTitle}>Iniciar Sesión</h2> {/* Título del modal */}
-                        <input type="email" placeholder="Correo electrónico" />
-                        <input type="password" placeholder="Contraseña" />
-                        <button className={styles.btn}>Ingresar</button>
+                        <input
+                            type="email"
+                            placeholder="Correo electrónico"
+                            value={loginData.email}
+                            onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Contraseña"
+                            value={loginData.password}
+                            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                        />
+                        <button
+                            className={styles.btn}
+                            onClick={async () => {
+                                try {
+                                    const response = await fetch('http://localhost:8000/api/token/', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            email: loginData.email, 
+                                            password: loginData.password
+                                        }),
+                                    });
+
+                                    const data = await response.json();
+
+                                    if (response.ok) {
+                                        localStorage.setItem('access', data.access);
+                                        localStorage.setItem('refresh', data.refresh);
+                                        localStorage.setItem('is_staff', data.is_staff); 
+                                        localStorage.setItem('username', data.username);
+
+                                        alert('Inicio de sesión exitoso');
+                                        setIsLoginOpen(false);
+
+                                        
+                                    } else {
+                                        alert('Error de autenticación');
+                                    }
+                                } catch (error) {
+                                    alert('Error al conectar con el servidor');
+                                }
+                            }}
+                        >
+                            Ingresar
+                        </button>
                         <p className={styles.linkText} onClick={() => { setIsLoginOpen(false); setIsRegisterOpen(true); }}>
                             ¿No tienes cuenta? <span>Regístrate</span>
                         </p>
@@ -176,6 +227,7 @@ const Navbar = () => {
                                             username: registroData.username,
                                             email: registroData.email,
                                             password: registroData.password,
+                                            telefono: registroData.telefono,
                                         }),
                                     });
 
