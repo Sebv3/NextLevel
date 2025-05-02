@@ -360,12 +360,13 @@ ul li a:hover {
 
 .cartIcon {
     position: relative;
-    font-size: 29px !important;
+    font-size: 30px !important;
     color: white;
     cursor: pointer;
     text-decoration: none;
     display: flex;
     align-items: center;
+    margin-bottom: 3px;
 }
 
 .cartIcon:hover {
@@ -479,3 +480,42 @@ input {
     color: black;
 }
 
+.loggedUser {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    
+}
+
+.userGreeting span {
+    margin-left: 0.5rem;
+
+}
+
+.userDropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.userDropdown a,
+.userDropdown button {
+    padding: 0.5rem 1rem;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.userDropdown a:hover,
+.userDropdown button:hover {
+    background-color: #f0f0f0;
+}

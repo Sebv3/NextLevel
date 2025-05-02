@@ -29,9 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:5173',  # Vite
-]
+
 
 
 # Application definition
@@ -49,6 +47,8 @@ INSTALLED_APPS = [
     'productos',
     'usuarios',
 ]
+
+AUTH_USER_MODEL = 'usuarios.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

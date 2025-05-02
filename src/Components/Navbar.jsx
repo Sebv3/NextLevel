@@ -17,6 +17,8 @@ const Navbar = () => {
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
     const searchRef = useRef(null);
+    const [username, setUsername] = useState(null);
+    const [showUserMenu, setShowUserMenu] = useState(false);
 
     const links = [
         { id: 1, link: "Inicio", path: "/" },
@@ -38,6 +40,23 @@ const Navbar = () => {
         email: '',
         password: ''
     });
+
+    const handleLogout = () => {
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
+        localStorage.removeItem('is_staff');
+        localStorage.removeItem('username');
+        setUsername(null);
+        setShowUserMenu(false);
+    };
+
+    useEffect(() => {
+        const storedUsername = localStorage.getItem('username');
+        if (storedUsername) {
+            setUsername(storedUsername);
+        }
+    }, []);
+    
 
 
     useEffect(() => {
@@ -88,13 +107,29 @@ const Navbar = () => {
             </div>
 
             <div className={styles.profileContainer}>
-                <Link to="/carrito" className={styles.cartIcon}>
-                    <AiOutlineShoppingCart />
-                    {totalItems > 0 && <span className={styles.cartBadge}>{totalItems}</span>}
-                </Link>
-                <div className={styles.divider}></div>
-                <FiUser className={styles.userIcon} onClick={() => setIsLoginOpen(true)} />
+    <Link to="/carrito" className={styles.cartIcon}>
+        <AiOutlineShoppingCart />
+        {totalItems > 0 && <span className={styles.cartBadge}>{totalItems}</span>}
+    </Link>
+    <div className={styles.divider}></div>
+
+    {username ? (
+        <div className={styles.loggedUser}>
+            <div onClick={() => setShowUserMenu(!showUserMenu)} className={styles.userGreeting}>
+                <FiUser className={styles.userIcon} />
+                <span>Hola, {username}!</span>
             </div>
+            {showUserMenu && (
+                <div className={styles.userDropdown}>
+                    <Link to="/perfil" onClick={() => setShowUserMenu(false)}>Mi Perfil</Link>
+                    <button onClick={handleLogout}>Cerrar sesión</button>
+                </div>
+            )}
+        </div>
+    ) : (
+        <FiUser className={styles.userIcon} onClick={() => setIsLoginOpen(true)} />
+    )}
+</div>
 
             {/* Modal de inicio de sesión */}
             {isLoginOpen && (
@@ -124,13 +159,13 @@ const Navbar = () => {
                             className={styles.btn}
                             onClick={async () => {
                                 try {
-                                    const response = await fetch('http://localhost:8000/api/token/', {
+                                    const response = await fetch('http://localhost:8000/api/login/', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
                                         },
                                         body: JSON.stringify({
-                                            email: loginData.email, 
+                                            email: loginData.email,
                                             password: loginData.password
                                         }),
                                     });
@@ -140,13 +175,13 @@ const Navbar = () => {
                                     if (response.ok) {
                                         localStorage.setItem('access', data.access);
                                         localStorage.setItem('refresh', data.refresh);
-                                        localStorage.setItem('is_staff', data.is_staff); 
+                                        localStorage.setItem('is_staff', data.is_staff);
                                         localStorage.setItem('username', data.username);
 
                                         alert('Inicio de sesión exitoso');
                                         setIsLoginOpen(false);
 
-                                        
+
                                     } else {
                                         alert('Error de autenticación');
                                     }
@@ -228,6 +263,7 @@ const Navbar = () => {
                                             email: registroData.email,
                                             password: registroData.password,
                                             telefono: registroData.telefono,
+                                            confirmPassword: registroData.confirmPassword // Incluir confirmPassword aquí
                                         }),
                                     });
 
