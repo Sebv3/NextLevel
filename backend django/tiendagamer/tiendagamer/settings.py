@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -157,3 +158,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 TRANSBANK_RETURN_URL = "http://127.0.0.1:5173/pago/"
 TRANSBANK_COMMERCE_CODE = "597055555532"  # Obténlo desde tu cuenta de Transbank
 TRANSBANK_API_KEY = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

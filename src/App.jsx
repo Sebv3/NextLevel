@@ -8,6 +8,7 @@ import Login from "./Screens/Login.jsx";
 import Registro from "./Screens/Registro.jsx";
 import Carrito from "./Screens/Carrito.jsx";
 import Pago from "./Screens/Pago.jsx";
+import Nuevos from "./Screens/Nuevos.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import CartProvider from "./context/CartContext";
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/pago" element={<Pago />} />
+        <Route path="/nuevos" element={<Nuevos />} />
       </Routes>
     </CartProvider>
   );

@@ -6,10 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 
-class JuegoViewSet(viewsets.ModelViewSet):
-    queryset = Juego.objects.all()
-    serializer_class = JuegoSerializer
-
 import json
 import time
 from django.http import JsonResponse
@@ -18,7 +14,13 @@ from django.conf import settings
 from transbank.webpay.webpay_plus.transaction import Transaction
 from transbank.common.integration_type import IntegrationType
 from transbank.webpay.webpay_plus.transaction import WebpayOptions
-from transbank.error.transbank_error import TransbankError  # ✅ Importado
+from transbank.error.transbank_error import TransbankError 
+from rest_framework.parsers import MultiPartParser, FormParser
+
+class JuegoViewSet(viewsets.ModelViewSet):
+    queryset = Juego.objects.all()
+    serializer_class = JuegoSerializer
+    parser_classes = (MultiPartParser, FormParser)
 
 @csrf_exempt
 def iniciar_pago(request):
