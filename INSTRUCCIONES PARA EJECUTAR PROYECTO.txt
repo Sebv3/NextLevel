@@ -1,0 +1,12 @@
+Ejecutar a la vez estas carpetas con VisualStudio
+
+BackEnd (django):
+-Abrir carpeta tiendagamer en VisualStudio ( NextLevel>backend django>tiendagamer )
+-Abrir terminal
+-Ejecutar comando py manage.py runserver
+
+FrontEnd (react vite): 
+-Abrir carpeta NextLevel en VisualStudio
+-Abrir terminal
+-Ejecutar comando npx vite dev
+
