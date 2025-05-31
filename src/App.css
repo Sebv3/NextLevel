@@ -45,3 +45,14 @@ body, html {
 .read-the-docs {
   color: #888;
 }
+
+
+.appLayout {
+  min-height: 100vh;         /* Ocupa toda la altura de la ventana */
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContent {
+  flex: 1;                   /* Empuja el footer hacia abajo */
+}

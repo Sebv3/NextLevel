@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from .models import CustomUser
 
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'email', 'username', 'telefono']
+
 class RegistroSerializer(serializers.ModelSerializer):
     confirmPassword = serializers.CharField(write_only=True)  # Agregar confirmPassword
 
@@ -23,3 +28,5 @@ class RegistroSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('confirmPassword')  # Eliminar confirmPassword antes de crear el usuario
         return CustomUser.objects.create_user(**validated_data)
+
+

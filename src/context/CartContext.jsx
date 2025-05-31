@@ -24,6 +24,10 @@ const CartProvider = ({ children }) => {
     });
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   // Función para eliminar un juego del carrito
   const removeFromCart = (id) => {
     setCart((prevCart) =>
@@ -37,9 +41,9 @@ const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotal }}>
-      {children}
-    </CartContext.Provider>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotal, clearCart }}>
+  {children}
+</CartContext.Provider>
   );
 };
 

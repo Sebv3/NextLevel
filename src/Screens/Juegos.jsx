@@ -63,8 +63,7 @@ const Juegos = () => {
         </div>
       </div>
 
-      {/* Footer FUERA del container */}
-      <Footer />
+
     </>
   );
 };

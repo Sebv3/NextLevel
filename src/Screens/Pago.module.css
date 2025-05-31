@@ -1,0 +1,64 @@
+.pago-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.pago-card {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.pago-header {
+  margin-bottom: 20px;
+}
+
+.pago-header-success {
+  color: #16a34a; /* verde */
+}
+
+.pago-header-error {
+  color: #dc2626; /* rojo */
+}
+
+.pago-header-loading {
+  color: #3b82f6; /* azul */
+}
+
+
+.pago-mensaje {
+  font-size: 1.8rem;
+  color: #333;
+  margin-top: 12px;
+}
+
+.pago-resumen {
+  text-align: left;
+  margin-top: 30px;
+}
+
+.pago-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.pago-total {
+  font-size: 1.1rem;
+  margin: 12px 0;
+}
+
+.pago-productos {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 12px;
+}

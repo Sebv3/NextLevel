@@ -4,14 +4,14 @@
   padding: 40px 20px;
   font-size: 0.9rem;
   margin-top: 40px;
-  width: 100vw; /* importante para que ocupe toda la pantalla */
+  width: 100vw;
   box-sizing: border-box;
 }
   
 .footerContent {
   max-width: 1200px;
-  margin: 0 auto;      /* Centra el contenido */
-  padding: 0 20px;     /* Respeta el padding lateral como el resto del sitio */
+  margin: 0 auto;      
+  padding: 0 20px;     
   display: flex;
   justify-content: space-between;
   gap: 100px;

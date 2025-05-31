@@ -19,6 +19,8 @@ const Navbar = () => {
     const searchRef = useRef(null);
     const [username, setUsername] = useState(null);
     const [showUserMenu, setShowUserMenu] = useState(false);
+    const [showAuthWarning, setShowAuthWarning] = useState(false);
+
 
     const links = [
         { id: 1, link: "Inicio", path: "/" },
@@ -56,7 +58,7 @@ const Navbar = () => {
             setUsername(storedUsername);
         }
     }, []);
-    
+
 
 
     useEffect(() => {
@@ -107,29 +109,38 @@ const Navbar = () => {
             </div>
 
             <div className={styles.profileContainer}>
-    <Link to="/carrito" className={styles.cartIcon}>
-        <AiOutlineShoppingCart />
-        {totalItems > 0 && <span className={styles.cartBadge}>{totalItems}</span>}
-    </Link>
-    <div className={styles.divider}></div>
-
-    {username ? (
-        <div className={styles.loggedUser}>
-            <div onClick={() => setShowUserMenu(!showUserMenu)} className={styles.userGreeting}>
-                <FiUser className={styles.userIcon} />
-                <span>Hola, {username}!</span>
-            </div>
-            {showUserMenu && (
-                <div className={styles.userDropdown}>
-                    <Link to="/perfil" onClick={() => setShowUserMenu(false)}>Mi Perfil</Link>
-                    <button onClick={handleLogout}>Cerrar sesión</button>
+                <div
+                    className={styles.cartIcon}
+                    onClick={() => {
+                        if (username) {
+                            window.location.href = "/carrito";
+                        } else {
+                            setShowAuthWarning(true);
+                        }
+                    }}
+                >
+                    <AiOutlineShoppingCart />
+                    {totalItems > 0 && <span className={styles.cartBadge}>{totalItems}</span>}
                 </div>
-            )}
-        </div>
-    ) : (
-        <FiUser className={styles.userIcon} onClick={() => setIsLoginOpen(true)} />
-    )}
-</div>
+                <div className={styles.divider}></div>
+
+                {username ? (
+                    <div className={styles.loggedUser}>
+                        <div onClick={() => setShowUserMenu(!showUserMenu)} className={styles.userGreeting}>
+                            <FiUser className={styles.userIcon} />
+                            <span>Hola, {username}!</span>
+                        </div>
+                        {showUserMenu && (
+                            <div className={styles.userDropdown}>
+                                <Link to="/perfil" onClick={() => setShowUserMenu(false)}>Mi Perfil</Link>
+                                <button onClick={handleLogout}>Cerrar sesión</button>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <FiUser className={styles.userIcon} onClick={() => setIsLoginOpen(true)} />
+                )}
+            </div>
 
             {/* Modal de inicio de sesión */}
             {isLoginOpen && (
@@ -308,6 +319,42 @@ const Navbar = () => {
                         <p className={styles.linkText} onClick={() => { setIsForgotPasswordOpen(false); setIsLoginOpen(true); }}>
                             <span>Volver a Iniciar sesión</span>
                         </p>
+                    </div>
+                </div>
+            )}
+
+            {showAuthWarning && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <button className={styles.closeModal} onClick={() => setShowAuthWarning(false)}>&times;</button>
+
+                        <div className={styles.modalLogo}>
+                            <img src={logo} alt="Logo" className={styles.logoImg} />
+                        </div>
+
+                        <h2 className={styles.modalTitle}>Debes iniciar sesión</h2>
+                        <p className={styles.modalTitle2}>Para acceder al carrito necesitas tener una cuenta.</p>
+
+                        <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginTop: "20px" }}>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    setShowAuthWarning(false);
+                                    setIsLoginOpen(true);
+                                }}
+                            >
+                                Ya tengo cuenta
+                            </button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    setShowAuthWarning(false);
+                                    setIsRegisterOpen(true);
+                                }}
+                            >
+                                Registrarme
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

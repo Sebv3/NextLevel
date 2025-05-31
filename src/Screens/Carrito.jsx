@@ -5,33 +5,80 @@ import styles from "./Carrito.module.css";
 import { MdDelete } from "react-icons/md";
 
 const Carrito = () => {
-  const { cart, removeFromCart, getTotal } = useContext(CartContext);
+  const { cart, removeFromCart, getTotal, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false); // Estado para manejar el loading
+  const [loading, setLoading] = useState(false);
+  const [direccion, setDireccion] = useState("");
+  const [telefono, setTelefono] = useState("");
 
   const handlePayment = async () => {
+    if (!direccion || !telefono) {
+      alert("Por favor completa dirección y teléfono.");
+      return;
+    }
+
     setLoading(true);
+    const sessionId = `session-${Date.now()}`;
     try {
-      // Suponiendo que el total se calcula en getTotal() y que el ID de la sesión y el número de orden se generan en el frontend
-      const response = await fetch("http://localhost:8000/api/create_transaction/", {
-        method: "POST",  // 🚀 Importante: asegúrate de que realmente sea POST
+      const token = localStorage.getItem("access");
+      if (!token) {
+        alert("No estás autenticado, por favor inicia sesión.");
+        setLoading(false);
+        return;
+      }
+
+      // Crear pedido
+      const crearPedidoResponse = await fetch("http://localhost:8000/api/pedidos/crear/", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          direccion_envio: direccion,
+          telefono_contacto: telefono,
+          total: getTotal(),
+          productos: cart.map(item => ({ id: item.id, cantidad: item.cantidad })),
+          session_id: sessionId,
+        }),
+      });
+
+      if (!crearPedidoResponse.ok) {
+        const errorData = await crearPedidoResponse.json();
+        alert("Error al crear el pedido: " + (errorData.detail || JSON.stringify(errorData)));
+        setLoading(false);
+        return;
+      }
+
+      const pedidoData = await crearPedidoResponse.json();
+
+      // Crear transacción
+      const transactionResponse = await fetch("http://localhost:8000/api/create_transaction/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           amount: getTotal(),
-          buy_order: `ORDEN-${new Date().getTime()}`,
-          session_id: "SESSION123",
+          pedido_id: pedidoData.pedido_id,
+          session_id: sessionId,
         }),
       });
-  
-      const data = await response.json();
-      console.log("Respuesta de la API:", data);
-  
-      if (data.url_webpay) {
-        window.location.href = data.url_webpay;
+
+      if (!transactionResponse.ok) {
+        const errorData = await transactionResponse.json();
+        alert("Error al procesar la transacción: " + (errorData.error || JSON.stringify(errorData)));
+        setLoading(false);
+        return;
       }
-       else {
+
+      const transactionData = await transactionResponse.json();
+
+      if (transactionData.url_webpay) {
+        clearCart();
+        window.location.href = transactionData.url_webpay;
+      } else {
         alert("Hubo un error al procesar la transacción.");
       }
     } catch (error) {
@@ -56,12 +103,15 @@ const Carrito = () => {
                   <p className={styles.price}>
                     {new Intl.NumberFormat("es-CL", {
                       style: "currency",
-                      currency: "CLP", // Moneda pesos chilenos
+                      currency: "CLP",
                     }).format(juego.precio)}
                   </p>
                   <p>Cantidad: {juego.cantidad}</p>
                 </div>
-                <button className={styles.removeButton} onClick={() => removeFromCart(juego.id)}>
+                <button
+                  className={styles.removeButton}
+                  onClick={() => removeFromCart(juego.id)}
+                >
                   <MdDelete />
                 </button>
               </li>
@@ -69,8 +119,31 @@ const Carrito = () => {
           </ul>
 
           <div className={styles.cartSummary}>
-            <h2 className={styles.total}>Total: ${getTotal().toLocaleString("es-CL")}</h2>
-            <button className={styles.payButton} onClick={handlePayment} disabled={loading}>
+            <h2 className={styles.total}>
+              Total: {getTotal().toLocaleString("es-CL", { style: "currency", currency: "CLP" })}
+            </h2>
+
+            <input
+              type="text"
+              placeholder="Dirección de envío"
+              value={direccion}
+              onChange={(e) => setDireccion(e.target.value)}
+              className={styles.input}
+            />
+
+            <input
+              type="text"
+              placeholder="Teléfono de contacto"
+              value={telefono}
+              onChange={(e) => setTelefono(e.target.value)}
+              className={styles.input}
+            />
+
+            <button
+              className={styles.payButton}
+              onClick={handlePayment}
+              disabled={loading || !direccion || !telefono}
+            >
               {loading ? "Cargando..." : "Ir a pagar"}
             </button>
           </div>

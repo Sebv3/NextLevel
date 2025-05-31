@@ -18,7 +18,7 @@ body, html {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   padding-top: 50px;
   
@@ -97,39 +97,39 @@ body, html {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 60px; /* Tamaño grande del icono en pantallas grandes */
+  font-size: 60px;
   transition: transform 0.3s ease, color 0.3s ease;
-  color: #000000; /* Color inicial de los iconos */
-  padding: 15px; /* Padding más grande en pantallas grandes */
+  color: #000000;
+  padding: 15px; 
   margin-top: 50px;
 }
 
 .categoryButton:hover {
   transform: scale(1.1);
-  color: #007bff; /* Color cuando pasas el mouse */
+  color: #007bff; 
 }
 
 @media (max-width: 1200px) {
   .grid {
     grid-template-columns: 1fr;
-    justify-items: center; /* ✅ Centra los ítems horizontalmente */
+    justify-items: center; 
   }
 }
 
 @media (max-width: 768px) {
   .grid {
-    grid-template-columns: 1fr; /* 1 columna */
+    grid-template-columns: 1fr; 
   }
   .image {
-    width: 100%; /* Asegúrate de que las imágenes no sean más grandes que el contenedor */
+    width: 100%; 
   }
 
   .categoryButton {
-    font-size: 40px; /* Tamaño más pequeño del icono para pantallas pequeñas */
-    padding: 10px; /* Ajustar padding para que los botones no sean tan grandes */
+    font-size: 40px; 
+    padding: 10px; 
   }
   .categories {
-    gap: 15px; /* Reducir espacio entre los botones en pantallas pequeñas */
+    gap: 15px; 
   }
 }
 

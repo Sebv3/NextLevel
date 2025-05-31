@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
-import Footer from '../Components/footer';
 import styles from "./Home.module.css";
 
 const Home = () => {
@@ -100,7 +99,6 @@ const Home = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
       
   );

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'productos',
     'usuarios',
+    'pedidos',
 ]
 
 AUTH_USER_MODEL = 'usuarios.CustomUser'
@@ -155,9 +156,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-TRANSBANK_RETURN_URL = "http://127.0.0.1:5173/pago/"
-TRANSBANK_COMMERCE_CODE = "597055555532"  # Obténlo desde tu cuenta de Transbank
+TRANSBANK_RETURN_URL = "http://localhost:5173/pago"
+TRANSBANK_COMMERCE_CODE = "597055555532"  
 TRANSBANK_API_KEY = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DJOSER = {
+    "SERIALIZERS": {
+        "current_user": "usuarios.serializersRegistro.CustomUserSerializer",
+    }
+}
