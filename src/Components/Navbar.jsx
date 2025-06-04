@@ -170,7 +170,7 @@ const Navbar = () => {
                             className={styles.btn}
                             onClick={async () => {
                                 try {
-                                    const response = await fetch('http://localhost:8000/api/login/', {
+                                    const response = await fetch('http://localhost:8000/api/usuarios/login/', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
@@ -189,10 +189,10 @@ const Navbar = () => {
                                         localStorage.setItem('is_staff', data.is_staff);
                                         localStorage.setItem('username', data.username);
 
+                                        setUsername(data.username); // Actualiza el estado
+
                                         alert('Inicio de sesión exitoso');
                                         setIsLoginOpen(false);
-
-
                                     } else {
                                         alert('Error de autenticación');
                                     }
@@ -224,7 +224,7 @@ const Navbar = () => {
                             <img src={logo} alt="Logo" className={styles.logoImg} />
                         </div>
 
-                        <h2 className={styles.modalTitle}>Registrarse</h2> {/* Título del modal */}
+                        <h2 className={styles.modalTitle}>Registrarse</h2> {/* Titulo del modal */}
                         <input
                             type="text"
                             placeholder="Nombre de usuario"
@@ -264,7 +264,7 @@ const Navbar = () => {
                                 }
 
                                 try {
-                                    const response = await fetch('http://localhost:8000/api/register/', {
+                                    const response = await fetch('http://localhost:8000/api/usuarios/register/', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
@@ -274,7 +274,7 @@ const Navbar = () => {
                                             email: registroData.email,
                                             password: registroData.password,
                                             telefono: registroData.telefono,
-                                            confirmPassword: registroData.confirmPassword // Incluir confirmPassword aquí
+                                            confirmPassword: registroData.confirmPassword 
                                         }),
                                     });
 

@@ -4,10 +4,11 @@ from .views import JuegoViewSet
 from .views import iniciar_pago, return_url
 from .views import confirmar_transaccion
 from .views import iniciar_pago
-
+from .views import CategoriaViewSet
 
 router = DefaultRouter()
 router.register(r'juegos', JuegoViewSet)
+router.register(r'categorias', CategoriaViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

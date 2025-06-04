@@ -1,49 +1,86 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-// Creamos el contexto
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  // Cargamos el carrito desde localStorage (si existe)
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
 
-  // Función para agregar un juego al carrito
+  // Guardamos el carrito en localStorage cada vez que cambia
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   const addToCart = (juego) => {
     setCart((prevCart) => {
-      // Verificamos si el juego ya está en el carrito
       const existingItem = prevCart.find((item) => item.id === juego.id);
 
       if (existingItem) {
-        // Si ya está en el carrito, incrementamos la cantidad
         return prevCart.map((item) =>
           item.id === juego.id ? { ...item, cantidad: item.cantidad + 1 } : item
         );
       } else {
-        // Si es un nuevo producto, lo agregamos con cantidad 1
         return [...prevCart, { ...juego, cantidad: 1 }];
       }
     });
+  };
+
+  const removeOneFromCart = (id) => {
+    setCart((prevCart) =>
+      prevCart
+        .map((item) =>
+          item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
+        )
+        .filter((item) => item.cantidad > 0)
+    );
+  };
+
+  const removeFromCart = (id) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
   const clearCart = () => {
     setCart([]);
   };
 
-  // Función para eliminar un juego del carrito
-  const removeFromCart = (id) => {
-    setCart((prevCart) =>
-      prevCart.filter((item) => item.id !== id)
-    );
-  };
-
-  // Función para calcular el total
-  const getTotal = () => {
+  const getCartTotal = () => {
     return cart.reduce((total, item) => total + item.precio * item.cantidad, 0);
   };
 
+  const getCartCount = () => {
+    return cart.reduce((count, item) => count + item.cantidad, 0);
+  };
+
+  const getPaymentData = () => {
+    return {
+      total: getCartTotal(),
+      items: cart.map(({ id, nombre, precio, cantidad }) => ({
+        id,
+        nombre,
+        precio,
+        cantidad,
+      })),
+    };
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotal, clearCart }}>
-  {children}
-</CartContext.Provider>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeOneFromCart,
+        removeFromCart,
+        clearCart,
+        getCartTotal,
+        getCartCount,
+        getPaymentData,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
   );
 };
 

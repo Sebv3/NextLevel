@@ -5,7 +5,7 @@ import styles from "./Carrito.module.css";
 import { MdDelete } from "react-icons/md";
 
 const Carrito = () => {
-  const { cart, removeFromCart, getTotal, clearCart } = useContext(CartContext);
+  const { cart, removeFromCart, getCartTotal, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [direccion, setDireccion] = useState("");
@@ -37,7 +37,7 @@ const Carrito = () => {
         body: JSON.stringify({
           direccion_envio: direccion,
           telefono_contacto: telefono,
-          total: getTotal(),
+          total: getCartTotal(),
           productos: cart.map(item => ({ id: item.id, cantidad: item.cantidad })),
           session_id: sessionId,
         }),
@@ -60,7 +60,7 @@ const Carrito = () => {
           "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
-          amount: getTotal(),
+          amount: getCartTotal(),
           pedido_id: pedidoData.pedido_id,
           session_id: sessionId,
         }),
@@ -120,7 +120,7 @@ const Carrito = () => {
 
           <div className={styles.cartSummary}>
             <h2 className={styles.total}>
-              Total: {getTotal().toLocaleString("es-CL", { style: "currency", currency: "CLP" })}
+              Total: {getCartTotal().toLocaleString("es-CL", { style: "currency", currency: "CLP" })}
             </h2>
 
             <input

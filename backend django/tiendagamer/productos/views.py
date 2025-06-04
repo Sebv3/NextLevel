@@ -16,11 +16,19 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from pedidos.models import Pedido, ItemPedido
 from productos.models import Juego
 from django.contrib.auth import get_user_model
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Categoria
+from .serializers import CategoriaSerializer
 
 class JuegoViewSet(viewsets.ModelViewSet):
     queryset = Juego.objects.all()
     serializer_class = JuegoSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['categoria']
+
+class CategoriaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
 
 @csrf_exempt
 def iniciar_pago(request):
