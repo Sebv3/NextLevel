@@ -20,7 +20,10 @@ const Navbar = () => {
     const [username, setUsername] = useState(null);
     const [showUserMenu, setShowUserMenu] = useState(false);
     const [showAuthWarning, setShowAuthWarning] = useState(false);
-
+    const [registroError, setRegistroError] = useState('');
+    const [registroExito, setRegistroExito] = useState('');
+    const [loginError, setLoginError] = useState('');
+    const [loginExito, setLoginExito] = useState('');
 
     const links = [
         { id: 1, link: "Inicio", path: "/" },
@@ -38,6 +41,16 @@ const Navbar = () => {
         confirmPassword: '',
     });
 
+    const limpiarFormulario = () => {
+        setRegistroData({
+            username: '',
+            email: '',
+            telefono: '',
+            password: '',
+            confirmPassword: ''
+        });
+    };
+
     const [loginData, setLoginData] = useState({
         email: '',
         password: ''
@@ -51,6 +64,22 @@ const Navbar = () => {
         setUsername(null);
         setShowUserMenu(false);
     };
+
+    const validarContrasena = (password) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return regex.test(password);
+    };
+
+    const validarEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
+    const validarTelefono = (telefono) => {
+        const regex = /^[0-9]{8,15}$/; // Puedes ajustar el rango según tu país
+        return regex.test(telefono);
+    };
+
 
     useEffect(() => {
         const storedUsername = localStorage.getItem('username');
@@ -154,6 +183,16 @@ const Navbar = () => {
                         </div>
 
                         <h2 className={styles.modalTitle}>Iniciar Sesión</h2> {/* Título del modal */}
+                        {loginError && (
+                            <div className={styles.errorMensaje}>
+                                {loginError}
+                            </div>
+                        )}
+                        {loginExito && (
+                            <div className={styles.exitoMensaje}>
+                                {loginExito}
+                            </div>
+                        )}
                         <input
                             type="email"
                             placeholder="Correo electrónico"
@@ -169,6 +208,19 @@ const Navbar = () => {
                         <button
                             className={styles.btn}
                             onClick={async () => {
+                                setLoginError('');
+                                setLoginExito('');
+
+                                if (!loginData.email || !loginData.password) {
+                                    setLoginError('Todos los campos son obligatorios');
+                                    return;
+                                }
+
+                                if (!validarEmail(loginData.email)) {
+                                    setLoginError('El correo electrónico no es válido');
+                                    return;
+                                }
+
                                 try {
                                     const response = await fetch('http://localhost:8000/api/usuarios/login/', {
                                         method: 'POST',
@@ -188,18 +240,21 @@ const Navbar = () => {
                                         localStorage.setItem('refresh', data.refresh);
                                         localStorage.setItem('is_staff', data.is_staff);
                                         localStorage.setItem('username', data.username);
+                                        setUsername(data.username);
 
-                                        setUsername(data.username); // Actualiza el estado
-
-                                        alert('Inicio de sesión exitoso');
-                                        setIsLoginOpen(false);
+                                        setLoginExito('Inicio de sesión exitoso');
+                                        setTimeout(() => {
+                                            setLoginExito('');
+                                            setIsLoginOpen(false);
+                                        }, 1500);
                                     } else {
-                                        alert('Error de autenticación');
+                                        setLoginError('Credenciales inválidas');
                                     }
                                 } catch (error) {
-                                    alert('Error al conectar con el servidor');
+                                    setLoginError('Error al conectar con el servidor');
                                 }
                             }}
+
                         >
                             Ingresar
                         </button>
@@ -225,6 +280,13 @@ const Navbar = () => {
                         </div>
 
                         <h2 className={styles.modalTitle}>Registrarse</h2> {/* Titulo del modal */}
+                        {registroError && (
+                            <div className={styles.errorMensaje}>
+                                {registroError}
+                            </div>
+                        )}
+                        {registroExito && <div className={styles.exitoMensaje}>{registroExito}</div>}
+
                         <input
                             type="text"
                             placeholder="Nombre de usuario"
@@ -258,8 +320,31 @@ const Navbar = () => {
                         <button
                             className={styles.btn}
                             onClick={async () => {
+                                setRegistroError('');
+                                setRegistroExito('');
+
+                                if (!registroData.username || !registroData.email || !registroData.telefono || !registroData.password || !registroData.confirmPassword) {
+                                    setRegistroError('Todos los campos son obligatorios');
+                                    return;
+                                }
+
+                                if (!validarEmail(registroData.email)) {
+                                    setRegistroError('El correo electrónico no es válido');
+                                    return;
+                                }
+
+                                if (!validarTelefono(registroData.telefono)) {
+                                    setRegistroError('El número de teléfono no es válido');
+                                    return;
+                                }
+
                                 if (registroData.password !== registroData.confirmPassword) {
-                                    alert('Las contraseñas no coinciden');
+                                    setRegistroError('Las contraseñas no coinciden');
+                                    return;
+                                }
+
+                                if (!validarContrasena(registroData.password)) {
+                                    setRegistroError('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.');
                                     return;
                                 }
 
@@ -274,25 +359,33 @@ const Navbar = () => {
                                             email: registroData.email,
                                             password: registroData.password,
                                             telefono: registroData.telefono,
-                                            confirmPassword: registroData.confirmPassword 
+                                            confirmPassword: registroData.confirmPassword
                                         }),
                                     });
 
                                     if (response.ok) {
-                                        alert('Registro exitoso');
-                                        setIsRegisterOpen(false);
-                                        setIsLoginOpen(true); // abre login
+                                        setRegistroError('');
+                                        setRegistroExito('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                                        limpiarFormulario();
+
+                                        setTimeout(() => {
+                                            setRegistroExito('');
+                                            setIsRegisterOpen(false);
+                                            setIsLoginOpen(true);
+                                        }, 2000);
                                     } else {
                                         const errorData = await response.json();
-                                        alert('Error en el registro: ' + JSON.stringify(errorData));
+                                        setRegistroError('Error en el registro: ' + (errorData.detail || JSON.stringify(errorData)));
                                     }
                                 } catch (error) {
-                                    alert('Error de red: ' + error.message);
+                                    setRegistroError('Error de red: ' + error.message);
                                 }
                             }}
                         >
                             Registrarse
                         </button>
+
+
                         <p className={styles.linkText} onClick={() => { setIsRegisterOpen(false); setIsLoginOpen(true); }}>
                             ¿Ya tienes cuenta? <span>Iniciar sesión</span>
                         </p>

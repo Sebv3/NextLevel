@@ -523,3 +523,20 @@ input {
 .modalTitle2 {
     color: black;
 }
+
+.errorMensaje {
+  background-color: #ffe5e5;
+  color: #d8000c;
+  padding: 10px 15px;
+  border: 1px solid #d8000c;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.exitoMensaje {
+    color: green;
+    margin-top: 10px;
+    font-weight: bold;
+}

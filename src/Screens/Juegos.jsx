@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import styles from "./Juegos.module.css";
 import { FaPlaystation, FaXbox, FaWindows } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
+import { TbFilter } from "react-icons/tb";
 import { CartContext } from "../context/CartContext";
 import Footer from '../Components/footer';
-import { TbFilter } from "react-icons/tb";
 
-const categoriasDecorativas = [
+const categorias = [
   { id: 1, nombre: "PlayStation", icono: <FaPlaystation /> },
   { id: 2, nombre: "Xbox", icono: <FaXbox /> },
   { id: 3, nombre: "PC", icono: <FaWindows /> },
@@ -17,7 +17,6 @@ const Juegos = () => {
   const [juegos, setJuegos] = useState([]);
   const { addToCart } = useContext(CartContext);
   const [mostrarCategorias, setMostrarCategorias] = useState(false);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/juegos/")
@@ -26,73 +25,38 @@ const Juegos = () => {
       .catch((error) => console.error("Error al cargar los juegos:", error));
   }, []);
 
-  // Extrae nombres únicos de categorías desde los juegos
-  const categorias = [
-    ...new Set(
-      juegos
-        .filter(j => j.categoria !== null)
-        .map(juego => juego.categoria.nombre)
-    ),
-  ];
-
-  // Filtra los juegos por categoría seleccionada
-  const juegosFiltrados = categoriaSeleccionada
-    ? juegos.filter(juego => juego.categoria?.nombre === categoriaSeleccionada)
-    : juegos;
-
   return (
     <>
       <div className={styles.container}>
-        {/* Categorías decorativas */}
-        <div className={styles.categories}>
-          {categoriasDecorativas.map((categoria) => (
-            <button key={categoria.id} className={styles.categoryButton}>
-              {categoria.icono}
-            </button>
-          ))}
-        </div>
-
         <h1 className={styles.title}>Juegos Disponibles</h1>
 
-        {/* Filtro por categoría REAL */}
-        <div className={styles.filterButtonContainer}>
+        <div className={styles.filterWrapper}>
           <button
             onClick={() => setMostrarCategorias(!mostrarCategorias)}
             className={styles.filterToggleButton}
           >
-            {mostrarCategorias ? "Ocultar categorías" : "Filtrar por categoría"}
+            <TbFilter size={20} style={{ marginRight: 8 }} />
+            Categorías
           </button>
 
           {mostrarCategorias && (
             <div className={styles.dropdown}>
-              <div
-                className={styles.dropdownItem}
-                onClick={() => {
-                  setCategoriaSeleccionada(null);
-                  setMostrarCategorias(false);
-                }}
-              >
-                Todas las categorías
-              </div>
-              {categorias.map((nombreCategoria, index) => (
-                <div
-                  key={index}
-                  className={styles.dropdownItem}
-                  onClick={() => {
-                    setCategoriaSeleccionada(nombreCategoria);
-                    setMostrarCategorias(false);
-                  }}
-                >
-                  {nombreCategoria}
-                </div>
-              ))}
+              {categorias.length > 0 ? (
+                categorias.map((categoria) => (
+                  <div key={categoria.id} className={styles.dropdownItem}>
+                    {categoria.icono}
+                    <span>{categoria.nombre}</span>
+                  </div>
+                ))
+              ) : (
+                <div className={styles.dropdownItem}>No existen categorías</div>
+              )}
             </div>
           )}
         </div>
 
-        {/* Lista de juegos filtrados */}
         <div className={styles.grid}>
-          {juegosFiltrados.map((juego) => (
+          {juegos.map((juego) => (
             <div key={juego.id} className={styles.card}>
               <img
                 src={juego.imagen}

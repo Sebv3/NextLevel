@@ -121,6 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 8}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -168,3 +169,7 @@ DJOSER = {
         "current_user": "usuarios.serializersRegistro.CustomUserSerializer",
     }
 }
+
+{
+    'NAME': 'usuarios.validators.CustomPasswordValidator',
+},
