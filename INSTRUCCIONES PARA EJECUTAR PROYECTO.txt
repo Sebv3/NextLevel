@@ -3,10 +3,12 @@ Ejecutar a la vez estas carpetas con VisualStudio
 BackEnd (django):
 -Abrir carpeta tiendagamer en VisualStudio ( NextLevel>backend django>tiendagamer )
 -Abrir terminal
--Ejecutar comando py manage.py runserver
+-Ejecutar: pip install django==5.0.6 django-cors-headers djangorestframework djangorestframework-simplejwt djoser transbank-sdk django-filters pillow
+-Ejecutar: comando py manage.py runserver
 
 FrontEnd (react vite): 
 -Abrir carpeta NextLevel en VisualStudio
 -Abrir terminal
--Ejecutar comando npx vite dev
+-Ejecutar: npm install
+-Ejecutar: comando npx vite dev
 

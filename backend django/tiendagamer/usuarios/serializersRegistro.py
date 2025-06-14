@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser
+from django.contrib.auth.password_validation import validate_password
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,15 +19,20 @@ class RegistroSerializer(serializers.ModelSerializer):
         if CustomUser.objects.filter(email=value).exists():
             raise serializers.ValidationError("Este correo ya está registrado.")
         return value
-
+        
+    def validate_password(self, value):
+        validate_password(value) 
+        return value
+    
     def validate(self, data):
         # Validar que las contraseñas coincidan
         if data['password'] != data['confirmPassword']:
             raise serializers.ValidationError("Las contraseñas no coinciden.")
         return data
 
+
     def create(self, validated_data):
         validated_data.pop('confirmPassword')  # Eliminar confirmPassword antes de crear el usuario
         return CustomUser.objects.create_user(**validated_data)
 
-
+    

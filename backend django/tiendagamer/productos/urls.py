@@ -14,5 +14,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('create_transaction/', iniciar_pago, name="create_transaction"),
     path('return_url/', return_url),
-    path('confirm_transaction/', confirmar_transaccion),
+    path('confirm_transaction/', confirmar_transaccion, name="confirm_transaction"),
 ]
